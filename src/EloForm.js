@@ -39,7 +39,7 @@ const EloForm = () => {
           type="number"
           value={elo}
           onChange={(e) => setElo(e.target.value)}
-          label="ELO Zahl"
+          label="eigene ELO Zahl"
           variant="outlined"
         />
       </FormControl>
@@ -63,7 +63,7 @@ const EloForm = () => {
           <TextField
             fullWidth
             margin="normal"
-            label={`Gegner ELO ${index + 1}`}
+            label={`${index + 1}. Gegner ELO`}
             type="number"
             name="opponentElo"
             value={match.opponentElo}
@@ -73,7 +73,7 @@ const EloForm = () => {
           <TextField
             fullWidth
             margin="normal"
-            label={`Ergebnis ${index + 1}`}
+            label={`${index + 1}. Ergebnis`}
             type="number"
             name="result"
             value={match.result}
@@ -87,7 +87,7 @@ const EloForm = () => {
             onClick={() => handleRemoveMatch(index)}
             sx={{ marginTop: 1 }}
           >
-            Entfernen
+            Gegner Entfernen
           </Button>
         </Box>
       ))}
@@ -98,7 +98,7 @@ const EloForm = () => {
         startIcon={<AddIcon />}
         onClick={handleAddMatch}
       >
-        Feldpaar hinzufügen
+        Gegner hinzufügen
       </Button>
 
       <Button
