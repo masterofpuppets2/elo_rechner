@@ -1,0 +1,37 @@
+.form-container {
+    padding: 16px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Abstände zwischen Buttons */
+    margin-top: 16px;
+  }
+  
+  .match-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .opponent-elo-field {
+    flex-grow: 2; /* Gegner ELO Feld bekommt mehr Platz */
+  }
+  
+  .result-select {
+    width: 100px; /* Feste Breite für das Ergebnisfeld */
+  }
+  
+  .remove-button {
+    margin-left: 16px; /* Mehr Abstand zwischen Ergebnis und Entfernen-Button */
+    align-self: center; /* Vertikal mittig */
+  }
+  
+  .match-label {
+    flex-basis: 150px; /* Feste Breite für die Nummerierung, um einheitliche Position zu gewährleisten */
+    text-align: left; /* Links ausgerichtet */
+  }
+  

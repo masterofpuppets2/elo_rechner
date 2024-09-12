@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { TextField, Button, MenuItem, Select, InputLabel, FormControl, Box } from '@mui/material';
+import { TextField, Button, MenuItem, Select, InputLabel, FormControl, Box, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import './EloForm.css';
 
 const EloForm = () => {
   const [elo, setElo] = useState('');
@@ -26,17 +27,16 @@ const EloForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Hier kannst du die Daten verarbeiten, z.B. an einen Server senden
     console.log({ elo, kFactor, matches });
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ padding: 2 }}>
+    <Box component="form" onSubmit={handleSubmit} className="form-container">
       <FormControl fullWidth margin="normal">
-        <InputLabel id="elo-label">ELO Zahl</InputLabel>
         <TextField
           id="elo"
-          type="number"
+          type="text"
+          inputMode="numeric"
           value={elo}
           onChange={(e) => setElo(e.target.value)}
           label="eigene ELO Zahl"
@@ -59,59 +59,71 @@ const EloForm = () => {
       </FormControl>
 
       {matches.map((match, index) => (
-        <Box key={index} sx={{ marginBottom: 2 }}>
+        <Box key={index} className="match-box">
+          {/* Gegner Nummerierung */}
+          <Typography className="match-label">{`${index + 1}. Gegner`}</Typography>
+
+          {/* Gegner ELO */}
           <TextField
-            fullWidth
-            margin="normal"
-            label={`${index + 1}. Gegner ELO`}
-            type="number"
+            className="opponent-elo-field"
+            label="ELO"
+            type="text"
+            inputMode="numeric"
             name="opponentElo"
             value={match.opponentElo}
             onChange={(e) => handleMatchChange(index, e)}
             variant="outlined"
           />
-          <TextField
-            fullWidth
-            margin="normal"
-            label={`${index + 1}. Ergebnis`}
-            type="number"
-            name="result"
-            value={match.result}
-            onChange={(e) => handleMatchChange(index, e)}
-            variant="outlined"
-          />
+
+          {/* Ergebnis */}
+          <FormControl className="result-select">
+            <InputLabel id={`result-label-${index}`}>Ergebnis</InputLabel>
+            <Select
+              labelId={`result-label-${index}`}
+              name="result"
+              value={match.result}
+              onChange={(e) => handleMatchChange(index, e)}
+              label="Ergebnis"
+            >
+              <MenuItem value={0}>0</MenuItem>
+              <MenuItem value={0.5}>0.5</MenuItem>
+              <MenuItem value={1}>1</MenuItem>
+            </Select>
+          </FormControl>
+
+          {/* Entfernen Button */}
           <Button
+            className="remove-button"
             variant="outlined"
             color="error"
             startIcon={<RemoveIcon />}
             onClick={() => handleRemoveMatch(index)}
-            sx={{ marginTop: 1 }}
           >
             Gegner Entfernen
           </Button>
         </Box>
       ))}
 
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={<AddIcon />}
-        onClick={handleAddMatch}
-      >
-        Gegner hinzufügen
-      </Button>
+      <Box className="button-group">
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={handleAddMatch}
+        >
+          Gegner hinzufügen
+        </Button>
 
-      <Button
-        type="submit"
-        variant="contained"
-        color="success"
-        sx={{ marginTop: 2 }}
-      >
-        Absenden
-      </Button>
+        <Button
+          type="submit"
+          variant="contained"
+          color="success"
+        >
+          Berechnen
+        </Button>
+      </Box>
     </Box>
   );
 };
 
 export default EloForm;
-
