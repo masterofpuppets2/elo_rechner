@@ -1,6 +1,6 @@
-import './App.css';
-import React from 'react';
-import EloForm from './EloForm';
+import './App.css'
+import React from 'react'
+import EloForm from './EloForm'
 
 function App() {
   return (
@@ -13,4 +13,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

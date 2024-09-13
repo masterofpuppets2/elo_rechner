@@ -1,34 +1,36 @@
-import React, { useState } from 'react';
-import { TextField, Button, MenuItem, Select, InputLabel, FormControl, Box, Typography } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import './EloForm.css';
+import React, { useState } from 'react'
+import { TextField, Button, MenuItem, Select, InputLabel, FormControl, Box, Typography } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
+import './EloForm.css'
+import EloRechner from './EloRechner'
 
 const EloForm = () => {
-  const [elo, setElo] = useState('');
-  const [kFactor, setKFactor] = useState('');
-  const [matches, setMatches] = useState([{ opponentElo: '', result: '' }]);
+  const [elo, setElo] = useState('')
+  const [kFactor, setKFactor] = useState('')
+  const [matches, setMatches] = useState([{ opponentElo: '', result: '' }])
 
   const handleAddMatch = () => {
-    setMatches([...matches, { opponentElo: '', result: '' }]);
-  };
+    setMatches([...matches, { opponentElo: '', result: '' }])
+  }
 
   const handleRemoveMatch = (index) => {
-    const newMatches = matches.filter((_, i) => i !== index);
-    setMatches(newMatches);
-  };
+    const newMatches = matches.filter((_, i) => i !== index)
+    setMatches(newMatches)
+  }
 
   const handleMatchChange = (index, event) => {
-    const { name, value } = event.target;
-    const newMatches = [...matches];
-    newMatches[index][name] = value;
-    setMatches(newMatches);
-  };
+    const { name, value } = event.target
+    const newMatches = [...matches]
+    newMatches[index][name] = value
+    setMatches(newMatches)
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log({ elo, kFactor, matches });
-  };
+    event.preventDefault()
+    EloRechner(elo, kFactor, matches)
+    //console.log({ elo, kFactor, matches })
+  }
 
   return (
     <Box component="form" onSubmit={handleSubmit} className="form-container">
@@ -121,7 +123,7 @@ const EloForm = () => {
         </Button>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default EloForm;
+export default EloForm
