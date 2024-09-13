@@ -60,12 +60,10 @@ const EloForm = () => {
 
       {matches.map((match, index) => (
         <Box key={index} className="match-box">
-          {/* Gegner Nummerierung */}
           <Typography className="match-label">{`${index + 1}. Gegner`}</Typography>
 
           {/* Gegner ELO */}
           <TextField
-            className="opponent-elo-field"
             label="ELO"
             type="text"
             inputMode="numeric"

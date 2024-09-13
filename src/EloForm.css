@@ -17,21 +17,17 @@
     margin-bottom: 16px;
   }
   
-  .opponent-elo-field {
-    flex-grow: 2; /* Gegner ELO Feld bekommt mehr Platz */
-  }
-  
   .result-select {
-    width: 120px; /* Feste Breite für das Ergebnisfeld */
+    width: 120px;
   }
   
   .remove-button {
-    margin-left: 16px; /* Mehr Abstand zwischen Ergebnis und Entfernen-Button */
-    align-self: center; /* Vertikal mittig */
+    margin-left: 16px;
+    align-self: center; 
   }
   
   .match-label {
-    flex-basis: 150px; /* Feste Breite für die Nummerierung, um einheitliche Position zu gewährleisten */
-    text-align: left; /* Links ausgerichtet */
+    flex-basis: 150px;
+    text-align: left;
   }
   
