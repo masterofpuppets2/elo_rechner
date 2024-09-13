@@ -1,6 +1,7 @@
 import punkteprozent from './punkteprozent.json'
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Typography, Link } from '@mui/material';
 
-const EloRechner = (elo, kFactor, matches) => {
+const EloRechner = ({ open, handleClose, elo, kFactor, matches }) => {
 
 // const Elo_input = [[], []]
 
@@ -64,11 +65,6 @@ for (let i = 0; i < Partien; i++) {
 const Gegnerschnitt = Gegner / Partien
 const Elodifferenz = Math.round((Elo_neu - parseFloat(elo)) * 100) / 100
 
-// Output 1: Neue Elo und erzielte Punkte
-console.log('erzielte Punkte:', erzieltePunkte)
-console.log('neue Elo:', parseFloat(Elo_neu.toFixed(2)))
-console.log('Elo-Differenz:', Elodifferenz)
-
 // Performance ausrechnen
 const Punkteprozentwert = Math.round((erzieltePunkte / Partien * 100)) / 100
 
@@ -82,15 +78,57 @@ for (let k = 0; k < 101; k++) {
 
 const perform = Gegnerschnitt + Wertedifferenz
 
-// Output 2: Gegnerschnitt, Wertedifferenz und Performance
-console.log('Gegnerschnitt:', parseFloat(Gegnerschnitt.toFixed(2)))
-console.log('Wertedifferenz:', Wertedifferenz)
-console.log('Elo-Performance:', parseFloat(perform.toFixed(2)))
+// // Output: Neue Elo und erzielte Punkte, Gegnerschnitt, Wertedifferenz und Performance
+// console.log('erzielte Punkte:', erzieltePunkte)
+// console.log('neue Elo:', parseFloat(Elo_neu.toFixed(2)))
+// console.log('Elo-Differenz:', Elodifferenz)
+// console.log('Gegnerschnitt:', parseFloat(Gegnerschnitt.toFixed(2)))
+// console.log('Elo-Performance:', parseFloat(perform.toFixed(2)))
 
 // Norm erreicht?
 if (perform >= 2449.5 && Partien >= 7 && Gegnerschnitt >= 2230 && (erzieltePunkte / Partien) >= 0.35) {
     console.log('IM-Norm erreicht, Glückwunsch!!')
 }
+
+const imNormErreicht = perform >= 2449.5 && Partien >= 7 && Gegnerschnitt >= 2230 && (erzieltePunkte / Partien) >= 0.35
+
+return (
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>Elo Rechner Ergebnisse</DialogTitle>
+      <DialogContent>
+        <Typography><strong>Erzielte Punkte:</strong> {erzieltePunkte}</Typography>
+        <Typography><strong>Neue Elo:</strong> {parseFloat(Elo_neu.toFixed(2))}</Typography>
+        <Typography><strong>Elo-Differenz:</strong> {Elodifferenz}</Typography>
+        <Typography><strong>Gegnerschnitt:</strong> {parseFloat(Gegnerschnitt.toFixed(2))}</Typography>
+        <Typography><strong>Elo-Performance:</strong> {parseFloat(perform.toFixed(2))}</Typography>
+        {imNormErreicht && (
+          <Typography color="green"><strong>IM-Norm erreicht, Glückwunsch!!</strong> <br/>
+                     Der Gegnerschnitt wurde hier ebenfalls berücksichtigt. 
+                     Zur Überprüfung der weiteren Kriterien siehe {' '}
+            <Link
+              href="https://handbook.fide.com/chapter/B012022"
+              target="_blank"
+              rel="noopener"
+              sx={{
+                color: 'black',
+                textDecoration: 'none',
+                '&:hover': {
+                  fontWeight: 'bold',
+                textDecoration: 'none'
+                }
+              }}
+            >
+              Titelbestimmung
+            </Link>
+          
+          </Typography>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Schließen</Button>
+      </DialogActions>
+    </Dialog>
+  );
 
 }
 

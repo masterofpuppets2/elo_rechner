@@ -9,6 +9,7 @@ const EloForm = () => {
   const [elo, setElo] = useState('')
   const [kFactor, setKFactor] = useState('')
   const [matches, setMatches] = useState([{ opponentElo: '', result: '' }])
+  const [open, setOpen] = useState(false);  
 
   const handleAddMatch = () => {
     setMatches([...matches, { opponentElo: '', result: '' }])
@@ -28,9 +29,12 @@ const EloForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    EloRechner(elo, kFactor, matches)
-    //console.log({ elo, kFactor, matches })
+    setOpen(true); 
   }
+
+  const handleClose = () => {
+    setOpen(false);
+  };  
 
   return (
     <Box component="form" onSubmit={handleSubmit} className="form-container">
@@ -122,6 +126,8 @@ const EloForm = () => {
           Berechnen
         </Button>
       </Box>
+
+      <EloRechner open={open} handleClose={handleClose} elo={elo} kFactor={kFactor} matches={matches} />  
     </Box>
   )
 }
