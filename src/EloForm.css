@@ -1,33 +1,33 @@
 .form-container {
-    padding: 16px
-  }
-  
-  .button-group {
-    display: flex;
-    justify-content: center;
-    gap: 10px; /* Abstände zwischen Buttons */
-    margin-top: 16px;
-  }
-  
-  .match-box {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .result-select {
-    width: 120px
-  }
-  
-  .remove-button {
-    margin-left: 16px;
-    align-self: center; 
-  }
-  
-  .match-label {
-    flex-basis: 150px;
-    text-align: left;
-  }
-  
+  padding: 16px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.match-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.result-select {
+  width: 120px;
+}
+
+.remove-button {
+  margin-left: 16px;
+  align-self: center;
+  height: 56px; /* gewährleistet gleiche Höhe wie die anderen Felder */
+}
+
+.match-label {
+  flex-basis: 150px;
+  text-align: left;
+}
