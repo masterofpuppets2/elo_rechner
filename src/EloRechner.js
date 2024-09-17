@@ -1,14 +1,5 @@
 import punkteprozent from './punkteprozent.json'
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Typography,
-  Link,
-  IconButton,
-} from '@mui/material'
+import { Dialog, DialogTitle, DialogContent, Typography, Link, IconButton } from '@mui/material'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import CloseIcon from '@mui/icons-material/Close'
 
@@ -197,9 +188,6 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches }) => {
           </Typography>
         )}
       </DialogContent>
-      {/* <DialogActions>
-        <Button onClick={handleClose}>Schließen</Button>
-      </DialogActions> */}
     </Dialog>
   )
 }
