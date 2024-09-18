@@ -16,43 +16,18 @@ import CloseIcon from '@mui/icons-material/Close'
 import { FEMALE } from './constants'
 
 const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
-  // const Elo_input = [[], []]
+  const Elo_input = [[], []]
 
-  // matches.forEach(match => {
-  //     Elo_input[0].push(parseFloat(match.opponentElo))  // Gegner Elo
-  //     Elo_input[1].push(parseFloat(match.result))  // Resultat (0, 0.5, 1)
-  //   })
-
-  // const Elo_input = [
-  //     [
-  //       2053,
-  //       2150,
-  //       2174,
-  //       2178,
-  //       2143,
-  //       2398,
-  //       2157,
-  //       2119,
-  //       2267
-  //     ],
-  //     [
-  //       1,
-  //       0,
-  //       0.5,
-  //       0.5,
-  //       1,
-  //       0,
-  //       0.5,
-  //       0.5,
-  //       1
-  //     ]
-  //   ]
+  matches.forEach((match) => {
+    Elo_input[0].push(parseFloat(match.opponentElo)) // Gegner Elo
+    Elo_input[1].push(parseFloat(match.result)) // Ergebnis 0, 0.5 oder 1
+  })
 
   //Bedingung für GM Norm
-  const Elo_input = [
-    [2500, 2550, 2480, 2420, 2600, 2450, 2390, 2380, 2400],
-    [1, 0.5, 1, 0.5, 0.5, 1, 0.5, 0.5, 1],
-  ]
+  // const Elo_input = [
+  //   [2500, 2550, 2480, 2420, 2600, 2450, 2390, 2380, 2400],
+  //   [1, 0.5, 1, 0.5, 0.5, 1, 0.5, 0.5, 1],
+  // ]
 
   const Punkteprozent = punkteprozent.data
 
@@ -60,7 +35,7 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
   let Elo_neu = parseFloat(elo) // Anfangswert alte Elo
   let erzieltePunkte = 0
   let Gegner = 0
-  const Partien = Elo_input[0].length //matches.length
+  const Partien = matches.length //Elo_input[0].length matches.length
 
   // Berechnung der neuen Elo
   for (let i = 0; i < Partien; i++) {
@@ -153,7 +128,7 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
 
           <Grid item xs={12} sm={6}>
             <Card>
-              <CardHeader title="Elo-Performance" />
+              <CardHeader title="Performance" />
               <CardContent>
                 <Typography variant="h4">{parseFloat(perform.toFixed(2))}</Typography>
               </CardContent>

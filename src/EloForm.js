@@ -25,6 +25,7 @@ const EloForm = () => {
   const [kFactor, setKFactor] = useState('')
   const [matches, setMatches] = useState([{ opponentElo: '', result: '' }])
   const [open, setOpen] = useState(false)
+  const [error, setError] = useState('')
 
   const handleAddMatch = () => {
     setMatches([...matches, { opponentElo: '', result: '' }])
@@ -44,7 +45,14 @@ const EloForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
+    if (!elo || !kFactor) {
+      setError('Bitte geben Sie alle erforderlichen Informationen ein.')
+      return
+    }
+
     setOpen(true)
+    setError('') // Fehler zurücksetzen
   }
 
   const handleClose = () => {
@@ -61,8 +69,10 @@ const EloForm = () => {
             inputMode="numeric"
             value={elo}
             onChange={(e) => setElo(e.target.value)}
-            label="alte ELO"
+            label="Alte ELO"
             variant="outlined"
+            error={!!error && !elo}
+            helperText={!!error && !elo ? 'Bitte alte ELO angeben' : ''}
           />
 
           <FormControl variant="outlined" sx={{ flex: 1 }}>
@@ -106,6 +116,7 @@ const EloForm = () => {
             label="K-Faktor"
             fullWidth
             style={{ marginRight: '10px' }}
+            error={!!error && !kFactor}
           >
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={20}>20</MenuItem>
@@ -146,6 +157,11 @@ const EloForm = () => {
             </IconButton>
           </Tooltip>
         </Box>
+        {!!error && !kFactor && (
+          <Typography color="error" variant="caption">
+            Bitte K-Faktor angeben
+          </Typography>
+        )}
       </FormControl>
 
       {matches.map((match, index) => (
@@ -206,6 +222,32 @@ const EloForm = () => {
           Berechnen
         </Button>
       </Box>
+
+      {!!error && (
+        <Typography color="error" variant="body1" sx={{ marginTop: 2 }}>
+          {error}
+        </Typography>
+      )}
+
+      <Typography
+        variant="body2"
+        sx={{
+          marginTop: 2,
+          color: 'text.secondary',
+          textAlign: 'left',
+          '& span': {
+            display: 'block',
+            marginLeft: 1,
+          },
+        }}
+      >
+        <sup>*</sup> <strong>Performance:</strong> ELO des Gegners wird auf 2050 angehoben, wenn sie
+        unter 2050 liegt. <br />
+        <span>
+          <strong>ELO Berechnung:</strong> Wenn die ELO des Gegners 400 Punkte unter der eigenen ELO
+          liegt, wird die ELO des Gegners auf den Wert der eigenen ELO minus 400 gesetzt.
+        </span>
+      </Typography>
 
       <EloRechner
         open={open}
