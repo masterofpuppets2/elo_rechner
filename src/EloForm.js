@@ -43,11 +43,27 @@ const EloForm = () => {
     setMatches(newMatches)
   }
 
+  const validateInputs = () => {
+    if (!elo || !kFactor) {
+      return 'Bitte geben Sie alle erforderlichen Informationen ein.'
+    }
+
+    for (const match of matches) {
+      if (!match.opponentElo || match.result === '') {
+        //!match.result würde nicht funktionieren, da es bei Ergebnis 0 auch einen Fehler werfen würde
+        return 'Bitte stellen Sie sicher, dass sowohl die ELO des Gegners als auch das Ergebnis für jeden Gegner ausgefüllt sind.'
+      }
+    }
+
+    return null
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (!elo || !kFactor) {
-      setError('Bitte geben Sie alle erforderlichen Informationen ein.')
+    const validationError = validateInputs()
+    if (validationError) {
+      setError(validationError)
       return
     }
 
@@ -63,6 +79,7 @@ const EloForm = () => {
     <Box component="form" onSubmit={handleSubmit} className="form-container">
       <FormControl fullWidth margin="normal">
         <Box display="flex" justifyContent="space-between" alignItems="center" gap="16px">
+          {/* eigene ELO */}
           <TextField
             id="elo"
             type="text"
@@ -75,6 +92,7 @@ const EloForm = () => {
             helperText={!!error && !elo ? 'Bitte alte ELO angeben' : ''}
           />
 
+          {/* Geschlecht */}
           <FormControl variant="outlined" sx={{ flex: 1 }}>
             <Box display="flex" alignItems="center">
               <InputLabel id="gender-label">Geschlecht (optional)</InputLabel>
@@ -106,6 +124,7 @@ const EloForm = () => {
         </Box>
       </FormControl>
 
+      {/* K-Faktor */}
       <FormControl fullWidth margin="normal">
         <Box display="flex" alignItems="center">
           <InputLabel id="k-factor-label">K-Faktor</InputLabel>
@@ -116,7 +135,7 @@ const EloForm = () => {
             label="K-Faktor"
             fullWidth
             style={{ marginRight: '10px' }}
-            error={!!error && !kFactor}
+            error={!!error && !kFactor} //select hat keine helpertext Option
           >
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={20}>20</MenuItem>
@@ -177,6 +196,8 @@ const EloForm = () => {
             value={match.opponentElo}
             onChange={(e) => handleMatchChange(index, e)}
             variant="outlined"
+            error={!!error && !match.opponentElo}
+            helperText={!!error && !match.opponentElo ? 'Bitte ELO angeben' : ''}
           />
 
           {/* Ergebnis */}
@@ -188,11 +209,17 @@ const EloForm = () => {
               value={match.result}
               onChange={(e) => handleMatchChange(index, e)}
               label="Ergebnis"
+              error={!!error && match.result === ''}
             >
               <MenuItem value={0}>0</MenuItem>
               <MenuItem value={0.5}>0.5</MenuItem>
               <MenuItem value={1}>1</MenuItem>
             </Select>
+            {!!error && match.result === '' && (
+              <Typography color="error" variant="caption">
+                Ergebnis fehlt
+              </Typography>
+            )}
           </FormControl>
 
           {/* Entfernen Button */}
