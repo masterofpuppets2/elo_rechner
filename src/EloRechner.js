@@ -1,5 +1,16 @@
 import punkteprozent from './punkteprozent.json'
-import { Dialog, DialogTitle, DialogContent, Typography, Link, IconButton } from '@mui/material'
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Typography,
+  IconButton,
+  Grid,
+  Card,
+  CardContent,
+  CardHeader,
+  Link,
+} from '@mui/material'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import CloseIcon from '@mui/icons-material/Close'
 import { FEMALE } from './constants'
@@ -71,7 +82,6 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
   }
 
   const Gegnerschnitt = Gegner / Partien
-  const Elodifferenz = Math.round((Elo_neu - parseFloat(elo)) * 100) / 100
 
   // Performance ausrechnen
   const Punkteprozentwert = Math.round((erzieltePunkte / Partien) * 100) / 100
@@ -85,13 +95,6 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
   }
 
   const perform = Gegnerschnitt + Wertedifferenz
-
-  // // Output: Neue Elo und erzielte Punkte, Gegnerschnitt, Wertedifferenz und Performance
-  // console.log('erzielte Punkte:', erzieltePunkte)
-  // console.log('neue Elo:', parseFloat(Elo_neu.toFixed(2)))
-  // console.log('Elo-Differenz:', Elodifferenz)
-  // console.log('Gegnerschnitt:', parseFloat(Gegnerschnitt.toFixed(2)))
-  // console.log('Elo-Performance:', parseFloat(perform.toFixed(2)))
 
   const imNormErreicht =
     perform >= 2450 && Partien >= 7 && Gegnerschnitt >= 2230 && erzieltePunkte / Partien >= 0.35
@@ -123,7 +126,7 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>
-        Elo Rechner Ergebnisse
+        Elo Rechner Auswertung
         <IconButton
           edge="end"
           onClick={handleClose}
@@ -138,54 +141,84 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <Typography>
-          <strong>Erzielte Punkte:</strong> {erzieltePunkte}
-        </Typography>
-        <Typography>
-          <strong>Neue Elo:</strong> {parseFloat(Elo_neu.toFixed(2))}
-        </Typography>
-        <Typography>
-          <strong>Elo-Differenz:</strong> {Elodifferenz}
-        </Typography>
-        <Typography>
-          <strong>Gegnerschnitt:</strong> {parseFloat(Gegnerschnitt.toFixed(2))}
-        </Typography>
-        <Typography>
-          <strong>Elo-Performance:</strong> {parseFloat(perform.toFixed(2))}
-        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <Card>
+              <CardHeader title="Neue Elo" />
+              <CardContent>
+                <Typography variant="h4">{parseFloat(Elo_neu.toFixed(2))}</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
 
-        {normData.map(
-          ({ condition, color, norm }, index) =>
-            condition && (
-              <Typography key={index} color={color}>
-                <strong>{norm}-Norm erreicht, Glückwunsch!</strong>{' '}
-                <EmojiEventsIcon sx={{ verticalAlign: 'middle' }} /> <br />
+          <Grid item xs={12} sm={6}>
+            <Card>
+              <CardHeader title="Elo-Performance" />
+              <CardContent>
+                <Typography variant="h4">{parseFloat(perform.toFixed(2))}</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Card>
+              <CardHeader title="Gegnerschnitt" />
+              <CardContent>
+                <Typography variant="h4">{parseFloat(Gegnerschnitt.toFixed(2))}</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Card>
+              <CardHeader title="Erzielte Punkte" />
+              <CardContent>
+                <Typography variant="h4">{erzieltePunkte}</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          {normData.map(
+            ({ condition, color, norm }, index) =>
+              condition && (
+                <Grid item xs={12} key={index}>
+                  <Card sx={{ backgroundColor: `${color}.light` }}>
+                    <CardContent>
+                      <Typography variant="h5" color={color}>
+                        <strong>{norm}-Norm erreicht, Glückwunsch!</strong>{' '}
+                        <EmojiEventsIcon sx={{ verticalAlign: 'middle' }} />
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              )
+          )}
+
+          {(imNormErreicht || gmNormErreicht || wgmNormErreicht || wimNormErreicht) && (
+            <Grid item xs={12}>
+              <Typography>
+                Der Gegnerschnitt wurde hier ebenfalls berücksichtigt. Zur Überprüfung der weiteren
+                Kriterien siehe{' '}
+                <Link
+                  href="https://handbook.fide.com/chapter/B012022"
+                  target="_blank"
+                  rel="noopener"
+                  sx={{
+                    fontWeight: 'bold',
+                    textDecoration: 'none',
+                    color: 'primary.main',
+                    '&:hover': {
+                      color: 'black',
+                      textDecoration: 'none',
+                    },
+                  }}
+                >
+                  Titelbestimmung
+                </Link>
               </Typography>
-            )
-        )}
-
-        {(imNormErreicht || gmNormErreicht || wgmNormErreicht || wimNormErreicht) && (
-          <Typography>
-            Der Gegnerschnitt wurde hier ebenfalls berücksichtigt. Zur Überprüfung der weiteren
-            Kriterien siehe{' '}
-            <Link
-              href="https://handbook.fide.com/chapter/B012022"
-              target="_blank"
-              rel="noopener"
-              sx={{
-                fontWeight: 'bold',
-                textDecoration: 'none',
-                color: 'primary.main',
-                '&:hover': {
-                  color: 'black',
-                  textDecoration: 'none',
-                },
-              }}
-            >
-              Titelbestimmung
-            </Link>
-          </Typography>
-        )}
+            </Grid>
+          )}
+        </Grid>
       </DialogContent>
     </Dialog>
   )
