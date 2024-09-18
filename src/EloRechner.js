@@ -2,8 +2,9 @@ import punkteprozent from './punkteprozent.json'
 import { Dialog, DialogTitle, DialogContent, Typography, Link, IconButton } from '@mui/material'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import CloseIcon from '@mui/icons-material/Close'
+import { FEMALE } from './constants'
 
-const EloRechner = ({ open, handleClose, elo, kFactor, matches }) => {
+const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
   // const Elo_input = [[], []]
 
   // matches.forEach(match => {
@@ -92,16 +93,6 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches }) => {
   // console.log('Gegnerschnitt:', parseFloat(Gegnerschnitt.toFixed(2)))
   // console.log('Elo-Performance:', parseFloat(perform.toFixed(2)))
 
-  // Norm erreicht?
-  if (
-    perform >= 2449.5 &&
-    Partien >= 7 &&
-    Gegnerschnitt >= 2230 &&
-    erzieltePunkte / Partien >= 0.35
-  ) {
-    console.log('IM-Norm erreicht, Glückwunsch!!')
-  }
-
   const imNormErreicht =
     perform >= 2450 && Partien >= 7 && Gegnerschnitt >= 2230 && erzieltePunkte / Partien >= 0.35
 
@@ -109,10 +100,18 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches }) => {
     perform >= 2600 && Partien >= 7 && Gegnerschnitt >= 2380 && erzieltePunkte / Partien >= 0.35
 
   const wimNormErreicht =
-    perform >= 2400 && Partien >= 7 && Gegnerschnitt >= 2180 && erzieltePunkte / Partien >= 0.35
+    gender === FEMALE &&
+    perform >= 2400 &&
+    Partien >= 7 &&
+    Gegnerschnitt >= 2180 &&
+    erzieltePunkte / Partien >= 0.35
 
   const wgmNormErreicht =
-    perform >= 2250 && Partien >= 7 && Gegnerschnitt >= 2030 && erzieltePunkte / Partien >= 0.35
+    gender === FEMALE &&
+    perform >= 2250 &&
+    Partien >= 7 &&
+    Gegnerschnitt >= 2030 &&
+    erzieltePunkte / Partien >= 0.35
 
   const normData = [
     { condition: imNormErreicht, color: 'green', norm: 'IM' },

@@ -16,9 +16,12 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import './EloForm.css'
 import EloRechner from './EloRechner'
+import InfoIcon from '@mui/icons-material/Info'
+import { FEMALE } from './constants'
 
 const EloForm = () => {
   const [elo, setElo] = useState('')
+  const [gender, setGender] = useState('')
   const [kFactor, setKFactor] = useState('')
   const [matches, setMatches] = useState([{ opponentElo: '', result: '' }])
   const [open, setOpen] = useState(false)
@@ -51,15 +54,46 @@ const EloForm = () => {
   return (
     <Box component="form" onSubmit={handleSubmit} className="form-container">
       <FormControl fullWidth margin="normal">
-        <TextField
-          id="elo"
-          type="text"
-          inputMode="numeric"
-          value={elo}
-          onChange={(e) => setElo(e.target.value)}
-          label="alte ELO"
-          variant="outlined"
-        />
+        <Box display="flex" justifyContent="space-between" alignItems="center" gap="16px">
+          <TextField
+            id="elo"
+            type="text"
+            inputMode="numeric"
+            value={elo}
+            onChange={(e) => setElo(e.target.value)}
+            label="alte ELO"
+            variant="outlined"
+          />
+
+          <FormControl variant="outlined" sx={{ flex: 1 }}>
+            <Box display="flex" alignItems="center">
+              <InputLabel id="gender-label">Geschlecht (optional)</InputLabel>
+              <Select
+                id="gender"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                label="Geschlecht (optional)"
+                fullWidth
+                style={{ marginRight: '10px' }}
+              >
+                <MenuItem value="male">Männlich</MenuItem>
+                <MenuItem value={FEMALE}>Weiblich</MenuItem>
+              </Select>
+              <Tooltip
+                title={
+                  <Box sx={{ padding: '5px', textAlign: 'center' }}>
+                    Die Angabe des Geschlechts ist für die Normbestimmung erforderlich.
+                  </Box>
+                }
+                arrow
+              >
+                <IconButton>
+                  <InfoIcon />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </FormControl>
+        </Box>
       </FormControl>
 
       <FormControl fullWidth margin="normal">
@@ -179,6 +213,7 @@ const EloForm = () => {
         elo={elo}
         kFactor={kFactor}
         matches={matches}
+        gender={gender}
       />
     </Box>
   )
