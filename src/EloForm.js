@@ -255,7 +255,7 @@ const EloForm = () => {
           startIcon={<AddIcon />}
           onClick={handleAddMatch}
         >
-          Gegner hinzufügen
+          Eintrag hinzufügen
         </Button>
 
         <Button type="submit" variant="contained" color="success">
