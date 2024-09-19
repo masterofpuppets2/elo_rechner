@@ -243,7 +243,7 @@ const EloForm = () => {
             onClick={() => handleRemoveMatch(index)}
             className="remove-button"
           >
-            Gegner Entfernen
+            Eintrag Entfernen
           </Button>
         </Box>
       ))}
@@ -264,7 +264,7 @@ const EloForm = () => {
       </Box>
 
       {!!error && (
-        <Typography color="error" variant="body2">
+        <Typography className="error-message" color="error" variant="body2">
           {error}
         </Typography>
       )}

@@ -75,6 +75,10 @@
   margin-top: 16px;
 }
 
+.error-message {
+  margin-top: 5px !important; /* sonst wird Abstand nicht angewandt */
+}
+
 .hint {
   margin-top: 16px !important; /* sonst wird Abstand nicht angewandt */
   color: rgba(0, 0, 0, 0.6);
