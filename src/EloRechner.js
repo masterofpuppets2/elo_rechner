@@ -168,18 +168,16 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
 
           {(imNormErreicht || gmNormErreicht || wgmNormErreicht || wimNormErreicht) && (
             <Grid item xs={12}>
-              <Typography>
-                Der Gegnerschnitt wurde hier ebenfalls berücksichtigt. Zur Überprüfung der weiteren
-                Kriterien siehe{' '}
-                <Link
-                  href="https://handbook.fide.com/chapter/B012022"
-                  target="_blank"
-                  rel="noopener"
-                  className="text-norm"
-                >
-                  Titelbestimmung
-                </Link>
-              </Typography>
+              Der Gegnerschnitt wurde hier ebenfalls berücksichtigt. Zur Überprüfung der weiteren
+              Kriterien siehe{' '}
+              <Link
+                href="https://handbook.fide.com/chapter/B012022"
+                target="_blank"
+                rel="noopener"
+                className="text-norm"
+              >
+                Titelbestimmung
+              </Link>
             </Grid>
           )}
         </Grid>

@@ -189,7 +189,7 @@ const EloForm = () => {
 
       {matches.map((match, index) => (
         <Box key={index} className="match-box">
-          <Typography className="match-label">{`${index + 1}. Gegner`}</Typography>
+          <div className="match-label">{`${index + 1}. Gegner`}</div>
 
           {/* Gegner ELO */}
           <TextField
