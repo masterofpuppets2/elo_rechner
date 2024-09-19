@@ -44,14 +44,23 @@ const EloForm = () => {
   }
 
   const validateInputs = () => {
+    const numberRegex = /^[0-9]+$/
+
     if (!elo || !kFactor) {
       return 'Bitte geben Sie alle erforderlichen Informationen ein.'
+    }
+
+    if (!numberRegex.test(elo)) {
+      return 'Die alte ELO muss eine gültige Zahl sein.'
     }
 
     for (const match of matches) {
       if (!match.opponentElo || match.result === '') {
         //!match.result würde nicht funktionieren, da es bei Ergebnis 0 auch einen Fehler werfen würde
         return 'Bitte stellen Sie sicher, dass sowohl die ELO des Gegners als auch das Ergebnis für jeden Gegner ausgefüllt sind.'
+      }
+      if (!numberRegex.test(match.opponentElo)) {
+        return 'Die ELO des Gegners muss eine gültige Zahl sein.'
       }
     }
 
@@ -88,8 +97,16 @@ const EloForm = () => {
             onChange={(e) => setElo(e.target.value)}
             label="Alte ELO"
             variant="outlined"
-            error={!!error && !elo}
-            helperText={!!error && !elo ? 'Bitte alte ELO angeben' : ''}
+            error={!!error && (!elo || isNaN(elo))}
+            helperText={
+              !!error
+                ? !elo
+                  ? 'Bitte alte ELO angeben'
+                  : isNaN(elo)
+                    ? 'Bitte gültige alte ELO angeben'
+                    : ''
+                : ''
+            }
           />
 
           {/* Geschlecht */}
@@ -196,8 +213,16 @@ const EloForm = () => {
             value={match.opponentElo}
             onChange={(e) => handleMatchChange(index, e)}
             variant="outlined"
-            error={!!error && !match.opponentElo}
-            helperText={!!error && !match.opponentElo ? 'Bitte ELO angeben' : ''}
+            error={!!error && (!match.opponentElo || isNaN(match.opponentElo))}
+            helperText={
+              !!error
+                ? !match.opponentElo
+                  ? 'Bitte ELO angeben'
+                  : isNaN(match.opponentElo)
+                    ? 'Bitte gültige ELO angeben'
+                    : ''
+                : ''
+            }
           />
 
           {/* Ergebnis */}
