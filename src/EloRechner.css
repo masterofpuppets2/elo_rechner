@@ -2,7 +2,6 @@
   position: absolute;
   top: 50%; /* zentriert den Button vertikal */
   right: -54%;
-  transform: translateY(-50%); /* korrigiert vertikale Zentrierung */
 }
 
 .text-center {
