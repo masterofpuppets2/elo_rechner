@@ -5,6 +5,10 @@
   transform: translateY(-50%); /* korrigiert vertikale Zentrierung */
 }
 
+.text-center {
+  text-align: center;
+}
+
 .icon-middle-align {
   vertical-align: middle;
 }

@@ -156,7 +156,7 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
                 <Grid item xs={12} key={index}>
                   <Card sx={{ backgroundColor: { backgroundColor } }}>
                     <CardContent>
-                      <Typography variant="h5" color={color}>
+                      <Typography variant="h5" color={color} className="text-center">
                         <strong>{norm}-Norm erreicht, Glückwunsch!</strong>{' '}
                         <EmojiEventsIcon className="icon-middle-align" />
                       </Typography>
