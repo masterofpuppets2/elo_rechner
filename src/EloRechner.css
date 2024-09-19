@@ -1,0 +1,20 @@
+.header {
+  position: absolute;
+  top: 8px;
+  right: 20px;
+}
+
+.icon-middle-align {
+  vertical-align: middle;
+}
+
+.text-norm {
+  font-weight: bold;
+  text-decoration: none;
+  color: #1976d2;
+
+  &:hover {
+    color: black;
+    text-decoration: none;
+  }
+}

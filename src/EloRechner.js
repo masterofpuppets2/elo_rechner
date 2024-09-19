@@ -1,3 +1,4 @@
+import './EloRechner.css'
 import punkteprozent from './punkteprozent.json'
 import {
   Dialog,
@@ -19,8 +20,8 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
   const Elo_input = [[], []]
 
   matches.forEach((match) => {
-    Elo_input[0].push(parseFloat(match.opponentElo)) // Gegner Elo
-    Elo_input[1].push(parseFloat(match.result)) // Ergebnis 0, 0.5 oder 1
+    Elo_input[0].push(parseFloat(match.opponentElo))
+    Elo_input[1].push(parseFloat(match.result))
   })
 
   //Bedingung für GM Norm
@@ -92,26 +93,22 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
     erzieltePunkte / Partien >= 0.35
 
   const normData = [
-    { condition: imNormErreicht, color: 'green', norm: 'IM' },
-    { condition: gmNormErreicht, color: 'blue', norm: 'GM' },
-    { condition: wimNormErreicht, color: 'orange', norm: 'WIM' },
-    { condition: wgmNormErreicht, color: 'purple', norm: 'WGM' },
+    {
+      condition: imNormErreicht,
+      color: 'white', //success
+      norm: 'IM',
+      backgroundColor: 'purple', //#FFCDD2
+    },
+    { condition: gmNormErreicht, color: 'info', norm: 'GM', backgroundColor: '#FFA500' },
+    { condition: wimNormErreicht, color: 'orange', norm: 'WIM', backgroundColor: '#0000FF' },
+    { condition: wgmNormErreicht, color: 'error', norm: 'WGM', backgroundColor: '#00B8D4' },
   ]
 
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>
         Elo Rechner Auswertung
-        <IconButton
-          edge="end"
-          onClick={handleClose}
-          aria-label="close"
-          sx={{
-            position: 'absolute',
-            top: '8px',
-            right: '20px',
-          }}
-        >
+        <IconButton edge="end" onClick={handleClose} aria-label="close" className="header">
           <CloseIcon />
         </IconButton>
       </DialogTitle>
@@ -154,14 +151,14 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
           </Grid>
 
           {normData.map(
-            ({ condition, color, norm }, index) =>
+            ({ condition, color, norm, backgroundColor }, index) =>
               condition && (
                 <Grid item xs={12} key={index}>
-                  <Card sx={{ backgroundColor: `${color}.light` }}>
+                  <Card sx={{ backgroundColor: { backgroundColor } }}>
                     <CardContent>
                       <Typography variant="h5" color={color}>
                         <strong>{norm}-Norm erreicht, Glückwunsch!</strong>{' '}
-                        <EmojiEventsIcon sx={{ verticalAlign: 'middle' }} />
+                        <EmojiEventsIcon className="icon-middle-align" />
                       </Typography>
                     </CardContent>
                   </Card>
@@ -178,15 +175,7 @@ const EloRechner = ({ open, handleClose, elo, kFactor, matches, gender }) => {
                   href="https://handbook.fide.com/chapter/B012022"
                   target="_blank"
                   rel="noopener"
-                  sx={{
-                    fontWeight: 'bold',
-                    textDecoration: 'none',
-                    color: 'primary.main',
-                    '&:hover': {
-                      color: 'black',
-                      textDecoration: 'none',
-                    },
-                  }}
+                  className="text-norm"
                 >
                   Titelbestimmung
                 </Link>

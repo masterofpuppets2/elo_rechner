@@ -5,12 +5,10 @@ import EloForm from './EloForm'
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>ELO Rechner</h1>
-        <EloForm />
-      </header>
+      <h1>ELO Rechner</h1>
+      <EloForm />
     </div>
-  );
+  )
 }
 
 export default App

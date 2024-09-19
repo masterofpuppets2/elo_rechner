@@ -1,5 +1,71 @@
-.form-container {
+.start-container {
   padding: 16px;
+}
+
+.first-box {
+  display: flex;
+  gap: 16px;
+}
+
+/* .MuiInputBase-input: interne Klasse von Material-UI, die tatsächlich das Eingabefeld stylt. */
+.centered-text-field .MuiInputBase-input {
+  text-align: center;
+}
+
+.outlined-form-control {
+  display: flex;
+  flex: 1;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+}
+
+.margin-right {
+  margin-right: 10px;
+}
+
+.gender-tooltip {
+  padding: 5px;
+  text-align: center;
+}
+
+.tooltip-content {
+  padding: 15px;
+  text-align: center;
+}
+
+.tooltip-heading {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.tooltip-list {
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.match-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.match-label {
+  flex-basis: 150px;
+  text-align: left;
+}
+
+.result-width {
+  width: 120px;
+}
+
+.remove-button {
+  height: 56px; /* gewährleistet gleiche Höhe wie die anderen Felder */
 }
 
 .button-group {
@@ -9,26 +75,13 @@
   margin-top: 16px;
 }
 
-.match-box {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
-  margin-bottom: 16px;
-  margin-top: 16px;
-}
-
-.result-select {
-  width: 120px;
-}
-
-.remove-button {
-  margin-left: 16px;
-  align-self: center;
-  height: 56px; /* gewährleistet gleiche Höhe wie die anderen Felder */
-}
-
-.match-label {
-  flex-basis: 150px;
+.hint {
+  margin-top: 16px !important; /* sonst wird Abstand nicht angewandt */
+  color: rgba(0, 0, 0, 0.6);
   text-align: left;
+}
+
+.hint span {
+  display: block;
+  margin-left: 8px;
 }

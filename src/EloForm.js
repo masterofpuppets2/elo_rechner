@@ -1,3 +1,4 @@
+import './EloForm.css'
 import React, { useState } from 'react'
 import {
   TextField,
@@ -14,7 +15,6 @@ import {
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
-import './EloForm.css'
 import EloRechner from './EloRechner'
 import InfoIcon from '@mui/icons-material/Info'
 import { FEMALE } from './constants'
@@ -85,9 +85,9 @@ const EloForm = () => {
   }
 
   return (
-    <Box component="form" onSubmit={handleSubmit} className="form-container">
+    <Box component="form" onSubmit={handleSubmit} className="start-container">
       <FormControl fullWidth margin="normal">
-        <Box display="flex" justifyContent="space-between" alignItems="center" gap="16px">
+        <Box className="first-box">
           {/* eigene ELO */}
           <TextField
             id="elo"
@@ -95,8 +95,8 @@ const EloForm = () => {
             inputMode="numeric"
             value={elo}
             onChange={(e) => setElo(e.target.value)}
-            label="Alte ELO"
             variant="outlined"
+            label="Alte ELO"
             error={!!error && (!elo || isNaN(elo))}
             helperText={
               !!error
@@ -107,26 +107,27 @@ const EloForm = () => {
                     : ''
                 : ''
             }
+            className="centered-text-field"
           />
 
           {/* Geschlecht */}
-          <FormControl variant="outlined" sx={{ flex: 1 }}>
-            <Box display="flex" alignItems="center">
-              <InputLabel id="gender-label">Geschlecht (optional)</InputLabel>
+          <FormControl className="outlined-form-control">
+            <Box className="box">
+              <InputLabel id="gender">Geschlecht (optional)</InputLabel>
               <Select
                 id="gender"
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
                 label="Geschlecht (optional)"
                 fullWidth
-                style={{ marginRight: '10px' }}
+                className="margin-right"
               >
                 <MenuItem value="male">Männlich</MenuItem>
                 <MenuItem value={FEMALE}>Weiblich</MenuItem>
               </Select>
               <Tooltip
                 title={
-                  <Box sx={{ padding: '5px', textAlign: 'center' }}>
+                  <Box className="gender-tooltip">
                     Die Angabe des Geschlechts ist für die Normbestimmung erforderlich.
                   </Box>
                 }
@@ -143,7 +144,7 @@ const EloForm = () => {
 
       {/* K-Faktor */}
       <FormControl fullWidth margin="normal">
-        <Box display="flex" alignItems="center">
+        <Box className="box">
           <InputLabel id="k-factor-label">K-Faktor</InputLabel>
           <Select
             id="k-factor"
@@ -151,8 +152,8 @@ const EloForm = () => {
             onChange={(e) => setKFactor(e.target.value)}
             label="K-Faktor"
             fullWidth
-            style={{ marginRight: '10px' }}
             error={!!error && !kFactor} //select hat keine helpertext Option
+            className="margin-right"
           >
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={20}>20</MenuItem>
@@ -160,22 +161,9 @@ const EloForm = () => {
           </Select>
           <Tooltip
             title={
-              <Box sx={{ padding: '15px', textAlign: 'center' }}>
-                <div
-                  style={{
-                    fontWeight: 'bold',
-                    marginBottom: '5px',
-                  }}
-                >
-                  Der K-Faktor ist:
-                </div>
-                <ul
-                  style={{
-                    padding: 0,
-                    margin: 0,
-                    textAlign: 'left',
-                  }}
-                >
+              <Box className="tooltip-content">
+                <div className="tooltip-heading">Der K-Faktor ist:</div>
+                <ul className="tooltip-list">
                   <li>40 für Spieler unter 18 Jahren mit einer ELO &lt; 2300</li>
                   <li>10 für Spieler mit einer ELO &gt; 2400</li>
                   <li>
@@ -185,8 +173,7 @@ const EloForm = () => {
                 </ul>
               </Box>
             }
-            arrow
-            // Pfeil vom Tooltip
+            arrow // Pfeil vom Tooltip
           >
             <IconButton>
               <HelpOutlineIcon />
@@ -223,10 +210,11 @@ const EloForm = () => {
                     : ''
                 : ''
             }
+            className="centered-text-field"
           />
 
           {/* Ergebnis */}
-          <FormControl className="result-select">
+          <FormControl className="result-width">
             <InputLabel id={`result-label-${index}`}>Ergebnis</InputLabel>
             <Select
               labelId={`result-label-${index}`}
@@ -249,11 +237,11 @@ const EloForm = () => {
 
           {/* Entfernen Button */}
           <Button
-            className="remove-button"
             variant="outlined"
             color="error"
             startIcon={<RemoveIcon />}
             onClick={() => handleRemoveMatch(index)}
+            className="remove-button"
           >
             Gegner Entfernen
           </Button>
@@ -276,23 +264,12 @@ const EloForm = () => {
       </Box>
 
       {!!error && (
-        <Typography color="error" variant="body1" sx={{ marginTop: 2 }}>
+        <Typography color="error" variant="body2">
           {error}
         </Typography>
       )}
 
-      <Typography
-        variant="body2"
-        sx={{
-          marginTop: 2,
-          color: 'text.secondary',
-          textAlign: 'left',
-          '& span': {
-            display: 'block',
-            marginLeft: 1,
-          },
-        }}
-      >
+      <Typography variant="body2" className="hint">
         <sup>*</sup> <strong>Performance:</strong> ELO des Gegners wird auf 2050 angehoben, wenn sie
         unter 2050 liegt. <br />
         <span>
